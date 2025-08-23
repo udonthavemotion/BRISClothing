@@ -1,3 +1,6 @@
+// Ensure this API endpoint runs as serverless function
+export const prerender = false;
+
 // Go High Level Configuration
 const GHL_WEBHOOK_URL = import.meta.env.GHL_WEBHOOK_URL || process.env.GHL_WEBHOOK_URL;
 const GHL_API_KEY = import.meta.env.GHL_API_KEY || process.env.GHL_API_KEY;
