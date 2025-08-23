@@ -1,0 +1,56 @@
+BRISCO STREETWEAR - ENVIRONMENT VARIABLES REFERENCE
+===================================================
+
+🔧 VERCEL ENVIRONMENT VARIABLES TO SET:
+---------------------------------------
+
+✅ REQUIRED FOR EMAIL (GHL Integration):
+GHL_WEBHOOK_URL=https://services.leadconnectorhq.com/hooks/9Ax53jRuv9z4JsRTJ60V/webhook-trigger/901f9ecd-0af6-4b78-8353-8678f0510286
+
+⚠️ OPTIONAL FOR ENHANCED EMAIL:
+GHL_API_KEY=your-ghl-api-key-here
+
+💳 STRIPE INTEGRATION (Configure when ready for payments):
+----------------------------------------------------------
+
+Test Environment:
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_PUBLISHABLE_KEY=pk_test_...
+
+Production Environment:
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_PUBLISHABLE_KEY=pk_live_...
+
+Webhook Secret:
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+Product Price IDs (create in Stripe Dashboard):
+BRISCO_WHITE_TEE_PRICE_ID=price_...
+BRISCO_BLACK_TEE_PRICE_ID=price_...
+
+Shipping Price IDs:
+STANDARD_SHIPPING_PRICE_ID=price_...
+EXPRESS_SHIPPING_PRICE_ID=price_...
+FREE_SHIPPING_PRICE_ID=price_...
+
+📋 VERCEL DEPLOYMENT STEPS:
+---------------------------
+1. Go to Vercel Dashboard > Your Project > Settings > Environment Variables
+2. Add the GHL_WEBHOOK_URL (required for email functionality)
+3. Add other variables as needed
+4. Redeploy the project
+
+🧪 TESTING:
+-----------
+After deployment with GHL_WEBHOOK_URL:
+- Visit your site authentication gate
+- Enter a real email address
+- Check that email is received with access code
+- Verify access code works to enter the site
+
+NOTES:
+------
+- GHL_WEBHOOK_URL is REQUIRED for email functionality
+- Stripe variables are optional until payment integration needed
+- Never commit actual environment values to git
+- Test email delivery after each deployment
