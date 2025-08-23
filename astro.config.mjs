@@ -4,13 +4,7 @@ import vercel from '@astrojs/vercel/serverless';
 // https://astro.build/config
 export default defineConfig({
   output: 'hybrid', // Allow both static and server-side rendering
-  adapter: vercel({
-    webAnalytics: { enabled: true },
-    functionPerRoute: false,
-    edgeMiddleware: false,
-    // Use stable Node.js runtime for Vercel
-    runtime: 'nodejs20.x'
-  }),
+  adapter: vercel(),
   site: 'https://www.brisclothing.com', // Production domain
   compressHTML: true,
   build: {

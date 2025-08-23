@@ -108,11 +108,11 @@ class BRISCAuthFlow {
     try {
       console.log(`[BRISC Auth] Processing access request for: ${email}`);
       
-      // Automatically detect environment and use appropriate API endpoint
+      // Use the working native Vercel API route
       const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       const apiUrl = isLocalhost 
-        ? `${window.location.origin}/api/send-access-email`  // Local development (use current port)
-        : '/api/send-access-email';  // Production (Vercel)
+        ? `${window.location.origin}/api/send-access-email`  // Local development (use Astro)
+        : '/api/ghl-webhook';  // Production (native Vercel API)
       
       console.log(`[BRISC Auth] Using API endpoint: ${apiUrl}`);
       
@@ -126,37 +126,25 @@ class BRISCAuthFlow {
 
       const data = await response.json();
 
-      // API now always returns success (non-blocking flow)
-      if (response.ok) {
+      // Check for successful response
+      if (response.ok && data.success) {
         console.log(`[BRISC Auth] API response:`, data);
         return { 
           success: true, 
           messageId: data.messageId, 
-          emailSent: data.emailSent,
-          userMessage: data.userMessage,
+          emailSent: true, // Production API working means email sent
+          userMessage: data.userMessage || 'Check your email for the access code',
           provider: data.provider
         };
       } else {
-        // Fallback - should rarely happen with new non-blocking API
-        console.warn('[BRISC Auth] API returned error, but proceeding:', data);
-        return { 
-          success: true, 
-          emailSent: false, 
-          userMessage: 'Check your email for the access code',
-          fallback: true 
-        };
+        // Handle API errors
+        console.error('[BRISC Auth] API returned error:', data);
+        throw new Error(data.error || data.message || 'Failed to send email');
       }
 
     } catch (error) {
       console.error('[BRISC Auth] Email request failed:', error);
-      
-      // Return success anyway - non-blocking flow
-      return { 
-        success: true, 
-        emailSent: false, 
-        userMessage: 'Check your email for the access code',
-        error: error.message 
-      };
+      throw error; // Propagate error to be handled by caller
     }
   }
 
