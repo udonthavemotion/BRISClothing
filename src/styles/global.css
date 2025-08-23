@@ -105,6 +105,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
+  background: var(--primary-black);
 }
 
 /* Hero Section */
@@ -447,6 +449,8 @@ section {
 .about {
   text-align: center;
   background: var(--primary-black);
+  margin: 0;
+  padding: 3rem 0;
 }
 
 /* Shirt Showcase Section */
@@ -454,16 +458,11 @@ section {
   background: var(--primary-black);
   padding: 2rem 0;
   position: relative;
+  margin: 0;
 }
 
 .shirt-showcase::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(245, 245, 245, 0.2), transparent);
+  display: none;
 }
 
 .showcase-grid {
@@ -516,9 +515,10 @@ section {
 
 /* Minimal Footer */
 .footer {
-  background: rgba(0,0,0,0.9);
+  background: var(--primary-black);
   padding: 2rem 0;
-  border-top: 1px solid var(--border-gray);
+  border-top: none;
+  margin: 0;
 }
 
 .footer-content {
@@ -934,23 +934,26 @@ section {
     font-size: 2.8rem;
   }
   
-  /* Shirt Showcase Responsive - Better mobile visibility */
+  /* Shirt Showcase Responsive - Single row layout for mobile */
   .shirt-showcase {
     padding: 1.5rem 0;
+    background: var(--primary-black);
   }
   
   .showcase-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
     max-width: 100%;
     margin: 0 auto;
   }
   
   .showcase-item {
     aspect-ratio: 1;
-    border-radius: 8px;
+    border-radius: 0;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
+    border: none;
+    background: transparent;
   }
   
   .showcase-image {
@@ -958,6 +961,9 @@ section {
     height: 100%;
     object-fit: cover;
     object-position: center;
+    border: none;
+    display: block;
+    background: var(--primary-black);
   }
   
   .tagline {
@@ -1543,25 +1549,60 @@ section.products h2 .animated-period {
   }
 }
 
-@media (max-width: 480px) {
-  /* Shirt Showcase Mobile - Enhanced visibility */
-  .shirt-showcase {
-    padding: 1.25rem 0;
-  }
-  
+/* iPhone 16 Pro Max and larger phones */
+@media (max-width: 430px) {
   .showcase-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.6rem;
+    max-width: 100%;
+    padding: 0 0.75rem;
+  }
+}
+
+/* iPhone 16/15/14/13 and similar */
+@media (max-width: 390px) {
+  .showcase-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
     max-width: 100%;
     padding: 0 0.5rem;
+  }
+}
+
+/* iPhone 12 mini and smaller */
+@media (max-width: 375px) {
+  .showcase-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+}
+
+/* Samsung Galaxy and Android phones */
+@media (max-width: 360px) {
+  .showcase-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.3rem;
+    max-width: 100%;
+    padding: 0 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Shirt Showcase Mobile - Single row layout */
+  .shirt-showcase {
+    padding: 1.25rem 0;
+    background: var(--primary-black);
   }
   
   .showcase-item {
     aspect-ratio: 1;
-    border-radius: 6px;
+    border-radius: 0;
     overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-    background: rgba(255, 255, 255, 0.02);
+    box-shadow: none;
+    border: none;
+    background: transparent;
   }
   
   .showcase-image {
@@ -1570,10 +1611,13 @@ section.products h2 .animated-period {
     object-fit: cover;
     object-position: center;
     transition: transform 0.3s ease;
+    border: none;
+    display: block;
+    background: var(--primary-black);
   }
   
   .showcase-item:active .showcase-image {
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
   
   .footer {
