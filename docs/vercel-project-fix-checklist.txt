@@ -1,0 +1,113 @@
+BRISCO STREETWEAR - VERCEL PROJECT DOMAIN FIX CHECKLIST
+========================================================
+
+🚨 PROBLEM: Multiple Vercel projects created, domain not on correct project
+🎯 SOLUTION: Consolidate to one project with proper domain configuration
+
+📋 STEP-BY-STEP FIX PROCESS:
+----------------------------
+
+1. IDENTIFY CORRECT VERCEL PROJECT:
+   □ Go to Vercel Dashboard (vercel.com/dashboard)
+   □ Find the project that should have www.brisclothing.com
+   □ Note the project name/URL
+
+2. VERIFY DOMAIN CONFIGURATION:
+   □ In correct project: Settings > Domains
+   □ Ensure www.brisclothing.com is added as domain
+   □ Ensure brisclothing.com redirects to www.brisclothing.com
+   □ Check DNS records are pointing to Vercel
+
+3. SET ENVIRONMENT VARIABLES IN CORRECT PROJECT:
+   □ Go to Settings > Environment Variables
+   □ Add: GHL_WEBHOOK_URL (REQUIRED)
+      Value: https://services.leadconnectorhq.com/hooks/9Ax53jRuv9z4JsRTJ60V/webhook-trigger/901f9ecd-0af6-4b78-8353-8678f0510286
+   □ Set for: Production (and Preview if testing)
+
+4. DEPLOY TO CORRECT PROJECT:
+   □ Connect GitHub repo to correct Vercel project
+   □ Deploy latest code with fixed API
+   □ Verify deployment URL matches www.brisclothing.com
+
+5. CLEAN UP EXTRA PROJECTS:
+   □ Delete unused Vercel projects
+   □ Keep only the one with www.brisclothing.com domain
+
+6. TEST THE FIXED SETUP:
+   □ Visit https://www.brisclothing.com
+   □ Enter email in authentication gate
+   □ Check browser Network tab for API call
+   □ Verify email is received via GHL
+   □ Test access code entry
+
+🔧 TECHNICAL FIXES APPLIED:
+---------------------------
+✅ Added CORS headers to API endpoint
+✅ Fixed API response format
+✅ Improved error handling
+✅ Cleaned up webhook payload structure
+
+🚨 CRITICAL CHECKS:
+-------------------
+□ API endpoint returns 200 (not 404)
+□ CORS headers present in response
+□ GHL webhook receives payload
+□ Email delivery works end-to-end
+
+📞 VERCEL PROJECT COMMANDS:
+---------------------------
+# List all projects
+vercel projects list
+
+# Link to specific project
+vercel link
+
+# Deploy to specific project
+vercel --prod
+
+🔍 DEBUGGING COMMANDS:
+----------------------
+# Test API locally
+curl -X POST http://localhost:4321/api/send-access-email \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"test@example.com"}'
+
+# Test API in production
+curl -X POST https://www.brisclothing.com/api/send-access-email \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"test@example.com"}'
+
+Expected Response:
+{
+  "ok": true,
+  "success": true,
+  "messageId": "webhook_triggered",
+  "message": "Access email sent successfully",
+  "provider": "ghl_webhook",
+  "emailSent": true,
+  "userMessage": "Check your email for the access code, then enter it below."
+}
+
+🎯 SUCCESS CRITERIA:
+--------------------
+□ www.brisclothing.com loads correctly
+□ Authentication gate appears
+□ Email submission returns success
+□ GHL receives webhook payload
+□ Access email is delivered
+□ Access code grants entry to store
+
+⚠️ ROLLBACK PLAN:
+-----------------
+If issues occur:
+1. Revert API changes via git
+2. Redeploy previous working version
+3. Check Vercel function logs for errors
+4. Verify environment variables are set
+
+NOTES:
+------
+- Only ONE Vercel project should have the domain
+- Environment variables must be set in the CORRECT project
+- Test thoroughly after each change
+- Keep GHL webhook URL secure and private

@@ -1,0 +1,36 @@
+# BRISCO PROJECT RULES - CRITICAL PATTERNS
+
+## API ROUTE ARCHITECTURE
+- NEVER use Astro serverless functions (src/pages/api/) for external integrations
+- ALWAYS use native Vercel API routes (root-level /api/) for webhooks
+- Use process.env for environment variables in Vercel routes
+- Use import.meta.env only for Astro pages/components
+
+## GHL WEBHOOK INTEGRATION
+- File location: api/ghl-webhook.js (NOT src/pages/api/)
+- Environment variable: process.env.GHL_WEBHOOK_URL
+- CORS headers required for https://www.brisclothing.com
+- Response format: { success: true, message: "...", provider: "GoHighLevel" }
+
+## DEPLOYMENT PATTERNS
+- Test API routes with curl before frontend integration
+- Disable Vercel deployment protection for API routes
+- Environment variables must be set in correct Vercel project
+- Frontend should detect localhost vs production for API endpoints
+
+## DEBUGGING PROTOCOL
+- Create diagnostic endpoints (api/test.js) first
+- If FUNCTION_INVOCATION_FAILED: switch to native Vercel routes
+- Check environment variables with api/env-check endpoint
+- Verify domain points to correct Vercel project
+
+## NEVER AGAIN PATTERNS
+- Don't create multiple Vercel projects for same domain
+- Don't mix Astro functions with critical integrations
+- Don't deploy without testing API endpoints directly
+- Don't assume environment variables carry over between deployments
+
+## WORKING CODE REFERENCES
+- See api/ghl-webhook.js for working GHL integration
+- See docs/ASTRO-VERCEL-GHL-BIBLE.md for full explanation
+- Frontend integration: public/enhanced-auth-flow.js line 115
