@@ -1,0 +1,110 @@
+BRISCO STREETWEAR - VERCEL DEPLOYMENT CHECKLIST
+===============================================
+
+🚀 READY FOR DEPLOYMENT TO VERCEL
+---------------------------------
+
+✅ PROJECT STATUS:
+- ✅ All files cleaned up and organized
+- ✅ Domain references updated to www.brisclothing.com
+- ✅ Build passes successfully (npm run build)
+- ✅ Git repository initialized with clean history
+- ✅ All unnecessary files removed
+
+📧 GHL EMAIL INTEGRATION:
+- ✅ API endpoint ready: /api/send-access-email
+- ✅ Webhook field mappings configured
+- ✅ Access code delivery system working
+- ⚠️  NEED: GHL_WEBHOOK_URL environment variable
+- ⚠️  NEED: GHL_API_KEY environment variable (optional)
+
+💳 STRIPE INTEGRATION PLACEHOLDERS:
+- ✅ API endpoints created: /api/stripe-checkout, /api/stripe-webhook
+- ✅ Success/cancel pages created: /success, /cancel
+- ✅ Cart checkout functionality integrated
+- ⚠️  NEED: Stripe environment variables (see stripe-setup-checklist.txt)
+
+🌐 DOMAIN CONFIGURATION:
+- ✅ All URLs updated to www.brisclothing.com
+- ✅ Canonical URLs, Open Graph, Schema markup updated
+- ✅ Success/cancel URLs configured for Stripe
+- ⚠️  NEED: Configure custom domain in Vercel dashboard
+
+📋 VERCEL DEPLOYMENT STEPS:
+1. Connect GitHub repository to Vercel
+2. Set framework preset to "Astro"
+3. Configure environment variables:
+   - GHL_WEBHOOK_URL (required for email)
+   - GHL_API_KEY (optional)
+   - STRIPE_* variables (when ready for payments)
+4. Add custom domain: www.brisclothing.com
+5. Deploy!
+
+🔧 ENVIRONMENT VARIABLES TO SET IN VERCEL:
+Required for Email:
+- GHL_WEBHOOK_URL=https://hooks.gohighlevel.com/your-webhook-url
+
+Optional for Enhanced Email:
+- GHL_API_KEY=your-ghl-api-key
+
+For Stripe (when ready):
+- STRIPE_SECRET_KEY=sk_test_... (test) or sk_live_... (live)
+- STRIPE_PUBLISHABLE_KEY=pk_test_... (test) or pk_live_... (live)
+- STRIPE_WEBHOOK_SECRET=whsec_...
+- BRISCO_WHITE_TEE_PRICE_ID=price_...
+- BRISCO_BLACK_TEE_PRICE_ID=price_...
+- STANDARD_SHIPPING_PRICE_ID=price_...
+- EXPRESS_SHIPPING_PRICE_ID=price_...
+- FREE_SHIPPING_PRICE_ID=price_...
+
+🧪 POST-DEPLOYMENT TESTING:
+□ Website loads at www.brisclothing.com
+□ Authentication gate works
+□ Email delivery works (test with real email)
+□ Product pages display correctly
+□ Cart functionality works
+□ Checkout shows "coming soon" message (until Stripe configured)
+□ Mobile responsiveness verified
+□ All images load correctly
+
+📱 MOBILE TESTING:
+□ Authentication gate responsive
+□ Product cards display properly
+□ Cart drawer works on mobile
+□ Touch interactions work
+□ Page load speed acceptable
+
+🔍 SEO VERIFICATION:
+□ Meta tags correct
+□ Open Graph images display
+□ Schema markup valid
+□ Canonical URLs correct
+□ Sitemap generated (if needed)
+
+⚡ PERFORMANCE CHECKLIST:
+□ Images optimized and lazy-loaded
+□ CSS/JS minified
+□ Service worker caching working
+□ Lighthouse score > 90
+
+🛡️ SECURITY CHECKLIST:
+□ Environment variables secure
+□ No API keys in client-side code
+□ HTTPS enforced
+□ Headers configured properly
+
+NOTES:
+------
+- The site is ready for immediate deployment
+- GHL email integration will work once webhook URL is configured
+- Stripe integration is prepared but needs configuration
+- All domain references point to www.brisclothing.com
+- Clean, production-ready codebase
+
+NEXT STEPS AFTER DEPLOYMENT:
+1. Test email delivery with real addresses
+2. Configure Stripe when ready for payments
+3. Set up analytics/tracking if needed
+4. Monitor performance and errors
+
+Last Updated: August 23, 2024
