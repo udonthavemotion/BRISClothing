@@ -9,7 +9,7 @@ export default defineConfig({
     functionPerRoute: false,
     edgeMiddleware: false,
     // Use the latest supported Node.js runtime
-    runtime: 'nodejs20.x'
+    runtime: 'nodejs22.x'
   }),
   site: 'https://www.brisclothing.com', // Production domain
   compressHTML: true,
