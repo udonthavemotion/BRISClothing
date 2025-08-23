@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "functions": {
     "src/pages/api/**/*.js": {
       "runtime": "nodejs20.x"
@@ -9,14 +10,5 @@
       "NODE_VERSION": "20"
     }
   },
-  "routes": [
-    {
-      "src": "/success",
-      "dest": "/success/index.html"
-    },
-    {
-      "src": "/cancel",
-      "dest": "/cancel/index.html"
-    }
-  ]
+  "framework": "astro"
 }
