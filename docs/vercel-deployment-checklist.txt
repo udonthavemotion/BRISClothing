@@ -10,6 +10,7 @@ BRISCO STREETWEAR - VERCEL DEPLOYMENT CHECKLIST
 - ✅ Build passes successfully (npm run build)
 - ✅ Git repository initialized with clean history
 - ✅ All unnecessary files removed
+- ✅ Node.js runtime updated to 22.x (fixes Vercel deployment error)
 
 📧 GHL EMAIL INTEGRATION:
 - ✅ API endpoint ready: /api/send-access-email
@@ -100,6 +101,7 @@ NOTES:
 - Stripe integration is prepared but needs configuration
 - All domain references point to www.brisclothing.com
 - Clean, production-ready codebase
+- FIXED: Node.js runtime error - updated to 22.x for Vercel compatibility
 
 NEXT STEPS AFTER DEPLOYMENT:
 1. Test email delivery with real addresses

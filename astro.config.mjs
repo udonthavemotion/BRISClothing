@@ -8,8 +8,8 @@ export default defineConfig({
     webAnalytics: { enabled: true },
     functionPerRoute: false,
     edgeMiddleware: false,
-    // Use the latest supported Node.js runtime
-    runtime: 'nodejs22.x'
+    // Use stable Node.js runtime for Vercel
+    runtime: 'nodejs20.x'
   }),
   site: 'https://www.brisclothing.com', // Production domain
   compressHTML: true,
