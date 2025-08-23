@@ -1,0 +1,217 @@
+<!-- BRISC Be Your Own Light (Thibodaux-native tone update), 2024-12-19 -->
+---
+// Minimal hero - single centerpiece image
+const mainCenterpiece = {
+  src: '/images/Product Assets/brevisidsg1.png',
+  alt: 'BRISC Collection - Be Your Own Light'
+};
+---
+
+<section class="minimal-hero" id="home">
+  <div class="container">
+    <div class="minimal-hero-content">
+      <img src="/images/Product%20Assets/M%20copy.png" alt="BRISC" class="hero-logo" />
+      
+      <!-- Single Centerpiece Image with Levitation -->
+      <div class="minimal-centerpiece">
+        <img 
+          src={mainCenterpiece.src} 
+          alt={mainCenterpiece.alt} 
+          width="600"
+          height="600"
+          loading="eager"
+          class="minimal-centerpiece-image"
+        />
+      </div>
+      
+      <a href="#products" class="minimal-shop-btn">
+        SHOP COLLECTION
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Minimal Hero Section */
+  .minimal-hero {
+    background: #000000;
+    color: #ffffff;
+    text-align: center;
+    padding: 4rem 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .minimal-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .hero-logo {
+    max-width: 120px;
+    height: auto;
+    animation: flameFlicker 2s ease-in-out infinite;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 20px rgba(245, 245, 245, 0.1));
+  }
+
+  @keyframes flameFlicker {
+    0%, 100% { opacity: 0.9; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); }
+  }
+
+  .minimal-tagline {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .minimal-secondary-tagline {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.05em;
+    font-style: italic;
+    margin: 0;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  /* Minimal Centerpiece with Levitation */
+  .minimal-centerpiece {
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+  }
+
+  .minimal-centerpiece-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    animation: levitate 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+  }
+
+  @keyframes levitate {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .minimal-centerpiece:hover .minimal-centerpiece-image {
+    transform: scale(1.02);
+  }
+
+  /* Minimal Shop Button */
+  .minimal-shop-btn {
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.2s ease;
+    border-radius: 0;
+  }
+
+  .minimal-shop-btn:hover {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .minimal-hero {
+      padding: 2rem 0;
+      min-height: 90vh;
+    }
+    
+    .minimal-hero-content {
+      gap: 1.2rem;
+      padding: 0 1rem;
+    }
+    
+    .hero-logo {
+      max-width: 100px;
+    }
+    
+    .minimal-tagline {
+      font-size: 0.85rem;
+    }
+    
+    .minimal-secondary-tagline {
+      font-size: 0.75rem;
+      max-width: 300px;
+    }
+    
+    .minimal-centerpiece {
+      max-width: 280px;
+    }
+    
+    .minimal-shop-btn {
+      padding: 0.8rem 1.4rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .minimal-hero {
+      padding: 1.5rem 0;
+      min-height: 85vh;
+    }
+    
+    .minimal-hero-content {
+      gap: 1rem;
+      padding: 0 0.8rem;
+    }
+    
+    .hero-logo {
+      max-width: 80px;
+    }
+    
+    .minimal-tagline {
+      font-size: 0.75rem;
+    }
+    
+    .minimal-secondary-tagline {
+      font-size: 0.65rem;
+      max-width: 280px;
+    }
+    
+    .minimal-centerpiece {
+      max-width: 240px;
+    }
+    
+    .minimal-shop-btn {
+      padding: 0.7rem 1.2rem;
+      font-size: 0.7rem;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .minimal-centerpiece-image {
+      animation: none;
+    }
+    
+    .minimal-centerpiece:hover .minimal-centerpiece-image {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Minimal hero - no carousel needed
+  console.log('[BRISC] Minimal hero loaded');
+</script>

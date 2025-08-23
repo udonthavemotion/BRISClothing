@@ -1,0 +1,336 @@
+<!-- BRISCO Be Your Own Light (Thibodaux-native tone update), 2024-12-19 -->
+---
+export interface Props {
+  id: number;
+  name: string;
+  price: number;
+  frontImg: string;
+  backImg: string;
+  desc: string;
+}
+
+const { id, name, price, frontImg, backImg, desc } = Astro.props;
+---
+
+<div class="product-card" data-product-id={id}>
+  <div class="limited-drop">Limited Drop</div>
+  <div class="limited-batch">LIMITED: Small-batch</div>
+
+  
+  <div class="product-image-container">
+    <img 
+      src={frontImg} 
+      alt=""
+      class="product-image front"
+      loading="lazy"
+    />
+    <img 
+      src={backImg} 
+      alt=""
+      class="product-image back"
+      loading="lazy"
+    />
+  </div>
+  
+  <div class="product-info">
+    <h3 class="product-name">{name}</h3>
+    <div class="product-price">${price}</div>
+    <p class="product-description">{desc}</p>
+    
+    <!-- Size Selection -->
+    <div class="size-selection">
+      <label class="size-label">Size</label>
+      <div class="size-options">
+        <button class="size-option" data-size="S">S</button>
+        <button class="size-option" data-size="M">M</button>
+        <button class="size-option" data-size="L">L</button>
+        <button class="size-option" data-size="XL">XL</button>
+        <button class="size-option" data-size="2XL">2XL</button>
+      </div>
+    </div>
+    
+    <button 
+      class="btn btn-primary add-to-cart"
+      data-product-id={id}
+      data-product-name={name}
+      data-product-price={price}
+      data-product-img={frontImg}
+      aria-label={`Add ${name} to cart`}
+    >
+      Add to Cart
+    </button>
+  </div>
+</div>
+
+<script>
+  // Size selection and add to cart functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const productCards = document.querySelectorAll('.product-card');
+    
+    productCards.forEach(card => {
+      const sizeOptions = card.querySelectorAll('.size-option');
+      const addToCartButton = card.querySelector('.add-to-cart') as HTMLButtonElement;
+      let selectedSize: string | null = null;
+      
+      if (!addToCartButton) return;
+      
+      // Size selection handler
+      sizeOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // Remove active class from all options in this card
+          sizeOptions.forEach(opt => opt.classList.remove('active'));
+          
+          // Add active class to clicked option
+          option.classList.add('active');
+          selectedSize = (option as HTMLElement).dataset.size || null;
+          
+          // Enable add to cart button
+          addToCartButton.disabled = false;
+          addToCartButton.classList.remove('disabled');
+        });
+      });
+      
+      // Add to cart handler
+      addToCartButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        if (!selectedSize) {
+          // Show size selection prompt
+          card.classList.add('size-required');
+          setTimeout(() => card.classList.remove('size-required'), 2000);
+          return;
+        }
+        
+        // Get product data
+        const productData = {
+          id: parseInt(addToCartButton.dataset.productId || '0'),
+          name: addToCartButton.dataset.productName || '',
+          price: parseInt(addToCartButton.dataset.productPrice || '0'),
+          frontImg: addToCartButton.dataset.productImg || '',
+          size: selectedSize
+        };
+        
+        // Add to cart
+        if ((window as any).briscoCart) {
+          (window as any).briscoCart.addItem(productData);
+        }
+        
+        // Visual feedback
+        const originalText = addToCartButton.textContent;
+        addToCartButton.textContent = 'Added!';
+        addToCartButton.classList.add('loading');
+        
+        setTimeout(() => {
+          addToCartButton.textContent = originalText;
+          addToCartButton.classList.remove('loading');
+        }, 1000);
+      });
+      
+      // Initially disable add to cart button
+      addToCartButton.disabled = true;
+      addToCartButton.classList.add('disabled');
+    });
+  });
+</script>
+
+<style>
+  /* Size Selection Styles */
+  .size-selection {
+    margin-bottom: 1.5rem;
+  }
+  
+  .size-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent-light);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .size-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .size-option {
+    background: transparent;
+    border: 1px solid var(--border-gray);
+    color: var(--text-gray);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    min-width: 40px;
+    text-align: center;
+    font-family: inherit;
+  }
+  
+  .size-option:hover {
+    border-color: var(--accent-light);
+    color: var(--accent-light);
+    background: rgba(245, 245, 245, 0.05);
+  }
+  
+  .size-option.active {
+    background: var(--accent-light);
+    color: var(--primary-black);
+    border-color: var(--accent-light);
+    box-shadow: 0 0 10px rgba(245, 245, 245, 0.3);
+  }
+  
+  /* Disabled add to cart button */
+  .add-to-cart.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(245, 245, 245, 0.3);
+    color: var(--text-gray);
+    border-color: rgba(245, 245, 245, 0.3);
+  }
+  
+  .add-to-cart.disabled:hover {
+    background: rgba(245, 245, 245, 0.3);
+    color: var(--text-gray);
+    transform: none;
+    box-shadow: none;
+  }
+  
+  /* Size required animation */
+  .product-card.size-required .size-selection {
+    animation: sizeRequired 0.5s ease-in-out;
+  }
+  
+  @keyframes sizeRequired {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+  
+  .product-card.size-required .size-label::after {
+    content: " - Please select a size";
+    color: #ff6b6b;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  /* Mobile-specific ProductCard optimizations */
+  @media (max-width: 768px) {
+    .product-card {
+      margin: 0 auto;
+      max-width: 350px;
+    }
+    
+    .product-image-container {
+      height: 380px;
+    }
+    
+    .product-info {
+      padding: 1.25rem;
+    }
+    
+    .product-name {
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+    
+    .product-price {
+      font-size: 1.3rem;
+    }
+    
+    .product-description {
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    
+    .add-to-cart {
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 0.8rem;
+    }
+    
+    .size-selection {
+      margin-bottom: 1.25rem;
+    }
+    
+    .size-label {
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+    }
+    
+    .size-option {
+      padding: 0.45rem 0.65rem;
+      font-size: 0.8rem;
+      min-width: 36px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .product-card {
+      max-width: 320px;
+    }
+    
+    .product-image-container {
+      height: 350px;
+    }
+    
+    .product-info {
+      padding: 1rem;
+    }
+    
+    .product-name {
+      font-size: 1rem;
+    }
+    
+    .product-price {
+      font-size: 1.2rem;
+    }
+    
+    .product-description {
+      font-size: 0.8rem;
+    }
+    
+    .add-to-cart {
+      padding: 0.8rem;
+      font-size: 0.75rem;
+    }
+    
+    .size-selection {
+      margin-bottom: 1rem;
+    }
+    
+    .size-label {
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .size-option {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.75rem;
+      min-width: 32px;
+    }
+    
+    .scarcity-timer {
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+    }
+    
+    .limited-drop {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+    }
+    
+    .limited-batch {
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+      top: 2.8rem;
+    }
+  }
+</style>

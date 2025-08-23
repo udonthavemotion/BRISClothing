@@ -1,0 +1,82 @@
+---
+export interface Props {
+  id: number;
+  name: string;
+  price: number;
+  frontImg: string;
+  backImg: string;
+  desc: string;
+}
+
+const { id, name, price, frontImg, backImg, desc } = Astro.props;
+---
+
+<div class="product-card" data-product-id={id}>
+  <div class="limited-drop">Limited Drop</div>
+  <div class="scarcity-timer" data-product-id={id}>
+    <span class="timer-label">Limited:</span>
+    <span class="timer-count">100 units left</span>
+  </div>
+  
+  <div class="product-image-container">
+    <img 
+      src={frontImg} 
+      alt=""
+      class="product-image front"
+      loading="lazy"
+    />
+    <img 
+      src={backImg} 
+      alt=""
+      class="product-image back"
+      loading="lazy"
+    />
+  </div>
+  
+  <div class="product-info">
+    <h3 class="product-name">{name}</h3>
+    <div class="product-price">${price}</div>
+    <p class="product-description">{desc}</p>
+    
+    <button 
+      class="btn btn-primary add-to-cart"
+      data-product='{JSON.stringify({ id, name, price, frontImg })}'
+      aria-label={`Add ${name} to cart`}
+    >
+      <!-- GHL Stripe: Use GoHighLevel funnels for checkout -->
+      Add to Cart
+    </button>
+  </div>
+</div>
+
+<script>
+  // Add to cart functionality - will be enhanced by cart.js
+  document.addEventListener('DOMContentLoaded', () => {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const productDataStr = button.getAttribute('data-product');
+        if (!productDataStr) return;
+        const productData = JSON.parse(productDataStr);
+        
+        // Dispatch custom event for cart system
+        const event = new CustomEvent('addToCart', {
+          detail: productData
+        });
+        
+        document.dispatchEvent(event);
+        
+        // Visual feedback
+        const originalText = button.textContent;
+        button.textContent = 'Added!';
+        button.classList.add('loading');
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.remove('loading');
+        }, 1000);
+      });
+    });
+  });
+</script>

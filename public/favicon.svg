@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .flame { fill: #f5f5f5; }
+      .base { fill: #1a1a1a; }
+    </style>
+  </defs>
+  <!-- Torch base -->
+  <rect x="45" y="70" width="10" height="25" class="base"/>
+  <!-- Flame -->
+  <path d="M50 15 Q35 35 40 55 Q30 75 45 85 Q40 90 50 95 Q60 90 55 85 Q70 75 60 55 Q65 35 50 15 Z" class="flame"/>
+  <!-- Inner flame -->
+  <path d="M50 25 Q40 40 43 55 Q38 65 48 75 Q45 80 50 85 Q55 80 52 75 Q62 65 57 55 Q60 40 50 25 Z" fill="#cccccc" opacity="0.8"/>
+</svg>

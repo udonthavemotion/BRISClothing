@@ -1,0 +1,420 @@
+<!-- BRISCO Be Your Own Light (Thibodaux-native tone update), 2024-12-19 -->
+---
+import ProductCard from '../components/ProductCard.astro';
+import Hero from '../components/Hero.astro';
+import '../styles/global.css';
+
+// Hardcoded product data
+const products = [
+  {
+    id: 1,
+    name: 'BRISC — Be Your Own Light (White)',
+    price: 65,
+    frontImg: '/images/fatlil.2_1755650727_3702989146314406154_305151088.jpg',
+    backImg: '/images/fatlil.2_1755650727_3702989146314371580_305151088.jpg',
+    desc: 'Oversized premium tee with BRISC torch motif. A clean white canvas carrying strength, clarity, and purpose. Small-batch release.'
+  },
+  {
+    id: 2,
+    name: 'BRISC — Be Your Own Light (Black)',
+    price: 65,
+    frontImg: '/images/fatlil.2_1755650727_3702989146557587913_305151088.jpg',
+    backImg: '/images/fatlil.2_1755650727_3702989146440085811_305151088.jpg',
+    desc: 'Premium oversized tee in blackout with bold empowerment typography. A statement in resilience and self-determination. Limited run — once gone, it\'s gone.'
+  }
+];
+
+const siteTitle = 'BRISC Exclusive Access - Be Your Own Light | Thibodaux Streetwear';
+const siteDescription = 'BRISC: Streetwear born in Thibodaux, Louisiana. Rooted in discipline, pride, and Southern strength, built for the modern world. Be your own light.';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>BRISC Exclusive Access - Be Your Own Light | Thibodaux Streetwear</title>
+  <meta name="description" content="BRISC: Streetwear born in Thibodaux, Louisiana. Rooted in discipline, pride, and Southern strength, built for the modern world. Be your own light.">
+  
+  <!-- Cache Control Headers -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="keywords" content="streetwear, fashion, BRISC, Khalil Brisco, Thibodaux, Louisiana, urban wear, limited edition, torch, flame, be your own light, Southern streetwear">
+  <meta name="author" content="Khalil Brisco">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://brisco.vercel.app">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://brisco.vercel.app">
+  <meta property="og:title" content="BRISC Exclusive Access - Be Your Own Light">
+  <meta property="og:description" content="BRISC: Streetwear born in Thibodaux, Louisiana. Rooted in discipline, pride, and Southern strength, built for the modern world. Be your own light.">
+  <meta property="og:image" content="/images/Product%20Assets/M%20copy.png">
+  <meta property="og:site_name" content="BRISC Streetwear">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://brisco.vercel.app">
+  <meta name="twitter:title" content="BRISC Exclusive Access - Be Your Own Light">
+  <meta name="twitter:description" content="BRISC: Streetwear born in Thibodaux, Louisiana. Rooted in discipline, pride, and Southern strength, built for the modern world. Be your own light.">
+  <meta name="twitter:image" content="/images/Product%20Assets/M%20copy.png">
+  <meta name="twitter:creator" content="@khalilbrisco8">
+  
+  <!-- Comprehensive Favicon Implementation -->
+  <link rel="icon" type="image/x-icon" href="/images/favico/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favico/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favico/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favico/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/favico/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/images/favico/android-chrome-512x512.png">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="BRISC">
+  
+  <!-- Windows Tile -->
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-TileImage" content="/images/favico/android-chrome-192x192.png">
+  
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="/images/favico/favicon.ico" as="image">
+  <link rel="preload" href="/images/favico/favicon-32x32.png" as="image">
+  <link rel="preload" href="/images/Product%20Assets/M%20copy.png" as="image">
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "BRISC Streetwear",
+      "url": "https://brisco.vercel.app",
+      "logo": "https://brisco.vercel.app/images/Product%20Assets/M%20copy.png",
+      "sameAs": [
+        "https://instagram.com/khalilbrisco8"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Khalil Brisco"
+      },
+      "description": "Streetwear born in Thibodaux, Louisiana. Rooted in discipline, pride, and Southern strength, built for the modern world."
+    }
+  </script>
+</head>
+
+<body>
+  <!-- BRISC Enhanced Authentication Gate -->
+  <div id="brisc-auth-gate" class="enhanced-auth-gate">
+    <!-- Email Step -->
+    <div id="email-step" class="auth-step email-step">
+      <div class="auth-content">
+        <img src="/images/Product%20Assets/M%20copy.png" alt="BRISC" class="auth-logo" aria-label="BRISC logo" />
+        
+        <h1 class="auth-title">EXCLUSIVE ACCESS</h1>
+        <p class="auth-subtitle">Enter your email to receive access credentials</p>
+        
+        <div class="auth-form">
+          <input 
+            type="email" 
+            id="auth-email"
+            placeholder="your@email.com"
+            class="auth-input"
+            autocomplete="email"
+            aria-label="Email address for exclusive access"
+          />
+          <button id="email-submit-btn" class="auth-btn primary">
+            GET ACCESS
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password Step -->
+    <div id="password-step" class="auth-step password-step" style="display: none;">
+      <div class="auth-content">
+        <img src="/images/Product%20Assets/M%20copy.png" alt="BRISC" class="auth-logo" aria-label="BRISC logo" />
+        
+        <h1 class="auth-title">ACCESS CODE</h1>
+        <p class="auth-subtitle">
+          Check your email: <strong id="email-display"></strong><br>
+          <span style="color: #888; font-weight: 400; font-size: 0.9em;">Enter the access code we sent you</span>
+        </p>
+        
+        <div class="auth-form">
+          <input 
+            type="password" 
+            id="auth-password"
+            placeholder="Enter access code"
+            class="auth-input"
+            aria-label="Access code from email"
+          />
+          <button id="password-submit-btn" class="auth-btn primary">
+            ENTER
+          </button>
+        </div>
+        
+        <button id="back-to-email-btn" class="auth-btn secondary">
+          ← Use Different Email
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Store Content (Hidden by default) -->
+  <div id="store-content" class="store-content" style="display: none;">
+    <!-- Torch Cart Icon -->
+    <button class="cart-icon torch-cart" aria-label="View shopping cart">
+      <span class="cart-letter" aria-hidden="true">BRISC<span class="cart-animated-period">.</span></span>
+      <span class="cart-count">0</span>
+    </button>
+
+    <!-- Cart Flyout Drawer -->
+    <div class="cart-drawer" id="cart-drawer">
+      <div class="cart-drawer-content">
+        <div class="cart-header">
+          <h3>Your Cart</h3>
+          <button class="cart-close" aria-label="Close cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+          <!-- Cart items will be populated by JavaScript -->
+        </div>
+        <div class="cart-footer">
+          <div class="cart-total">
+            <span>Total: $<span id="cart-total">0.00</span></span>
+          </div>
+          <button class="btn btn-primary cart-checkout" id="cart-checkout">
+            <!-- GHL Integration: Sync cart with GoHighLevel funnels for minimal checkout -->
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Enhanced Hero Section -->
+    <Hero />
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+      <div class="container">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem; font-weight: 300;">
+          Be Your Own Light Capsule
+        </h2>
+        
+        <div class="product-grid">
+          {products.map((product) => (
+            <ProductCard {...product} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-content">
+          <h2>The Vision</h2>
+          <p>
+            Dare to be different.
+          </p>
+          <p style="margin-top: 1.5rem; font-style: italic;">
+            "In a world of followers, dare to illuminate your own path."
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shirt Showcase Section -->
+    <section class="shirt-showcase" id="showcase">
+      <div class="container">
+        <div class="showcase-grid">
+          <div class="showcase-item">
+            <img src="/images/Untitled design (9).png" alt="BRISC Shirt Design" class="showcase-image" loading="lazy" />
+          </div>
+          <div class="showcase-item">
+            <img src="/images/Untitled design (8).png" alt="BRISC Shirt Design" class="showcase-image" loading="lazy" />
+          </div>
+          <div class="showcase-item">
+            <img src="/images/Untitled design (10).png" alt="BRISC Shirt Design" class="showcase-image" loading="lazy" />
+          </div>
+          <div class="showcase-item">
+            <img src="/images/Untitled design (12).png" alt="BRISC Shirt Design" class="showcase-image" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Minimal Footer -->
+    <footer class="footer" id="contact">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <img src="/images/Product%20Assets/M%20copy.png" alt="BRISC" class="footer-logo" />
+          </div>
+          
+          <div class="footer-newsletter">
+            <p style="font-size: 0.9rem; margin-bottom: 1rem; color: rgba(255,255,255,0.8);">Stay connected. Be the first to know when the next capsule drops.</p>
+            <div class="email-signup">
+              <input 
+                type="email" 
+                placeholder="Your email" 
+                class="email-input"
+                id="email-signup"
+                aria-label="Email address for newsletter signup"
+              />
+              <button class="btn btn-primary" id="signup-btn">
+                SUBSCRIBE
+              </button>
+            </div>
+          </div>
+          
+          <div class="footer-social">
+            <a href="https://www.instagram.com/fatlil.2/related_profiles/?api=1%2F&hl=zh-cn" class="social-link" target="_blank" rel="noopener noreferrer">
+              Follow the Light
+            </a>
+          </div>
+        </div>
+        <div class="footer-copyright" style="text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; color: rgba(255,255,255,0.6);">
+                     © 2024 BRISC Streetwear. All rights reserved. Born in Thibodaux. Built for leaders. Worn by legends.
+        </div>
+      </div>
+    </footer>
+  </div> <!-- End store-content -->
+
+  <!-- Scripts -->
+  <script is:inline src="/cart.js"></script>
+  <script is:inline src="/enhanced-auth-flow.js"></script>
+  
+  <!-- Service Worker Registration for PWA -->
+  <script>
+    // Clear old caches and force service worker update
+    async function clearOldCaches() {
+      if ('caches' in window) {
+        const cacheNames = await caches.keys();
+        const oldCaches = cacheNames.filter(name => name.startsWith('brisco-v') && !name.includes(Date.now().toString().substring(0, 8)));
+        await Promise.all(oldCaches.map(name => caches.delete(name)));
+        console.log('[BRISC] Cleared old caches:', oldCaches);
+      }
+    }
+
+    if ('serviceWorker' in navigator) {
+      // Clear old caches first
+      clearOldCaches();
+      
+      navigator.serviceWorker.register('/sw.js')
+        .then((registration) => {
+          console.log('[BRISC] Service Worker registered:', registration);
+          
+          // Check for updates every 30 seconds
+          setInterval(() => {
+            registration.update();
+          }, 30000);
+          
+          // Listen for new service worker
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('[BRISC] New service worker available, refreshing...');
+                  window.location.reload();
+                }
+              });
+            }
+          });
+        })
+        .catch((error) => {
+          console.log('[BRISC] Service Worker registration failed:', error);
+        });
+    }
+  </script>
+  
+  <!-- Cache Debugging Tools -->
+  <script>
+    // Developer cache clearing function (accessible via console)
+    (window as any).clearBriscoCache = async function() {
+      console.log('[BRISC] Clearing all caches...');
+      
+      // Clear all caches
+      if ('caches' in window) {
+        const cacheNames = await caches.keys();
+        await Promise.all(cacheNames.map(name => caches.delete(name)));
+        console.log('[BRISC] Cleared caches:', cacheNames);
+      }
+      
+      // Unregister service worker
+      if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(registrations.map(reg => reg.unregister()));
+        console.log('[BRISC] Unregistered service workers');
+      }
+      
+      // Clear local storage
+      localStorage.clear();
+      sessionStorage.clear();
+      console.log('[BRISC] Cleared storage');
+      
+      // Force reload
+      window.location.reload();
+    };
+    
+    console.log('[BRISC] Cache debugging tools loaded. Use clearBriscoCache() to force clear all caches.');
+  </script>
+
+  <!-- Minimal Analytics -->
+  <script>
+    // GHL Integration: Track page views
+    // Example: ghl('init', 'GHL_ACCOUNT_ID');
+    console.log('[BRISC] Minimal gate loaded');
+  </script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Footer email signup functionality
+      const signupBtn = document.getElementById('signup-btn');
+      const emailInput = document.getElementById('email-signup');
+      
+      if (signupBtn && emailInput) {
+        signupBtn.addEventListener('click', () => {
+          const email = (emailInput as HTMLInputElement).value.trim();
+          
+          if (!email) {
+            alert('Please enter your email address');
+            return;
+          }
+          
+          if (!isValidEmail(email)) {
+            alert('Please enter a valid email address');
+            return;
+          }
+          
+          // GHL API Integration: Send email to GoHighLevel
+          // Example: await fetch('/api/ghl/subscribe', { method: 'POST', body: { email } })
+          
+          alert('Thanks for subscribing! You\'ll be the first to know about new drops.');
+          (emailInput as HTMLInputElement).value = '';
+        });
+        
+        emailInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            signupBtn.click();
+          }
+        });
+      }
+    });
+    
+    // Email validation helper
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+  </script>
+</body>
+</html>
