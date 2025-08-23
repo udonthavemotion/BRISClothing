@@ -9,14 +9,14 @@
       "NODE_VERSION": "20"
     }
   },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/success",
-      "destination": "/success/"
+      "src": "/success",
+      "dest": "/success/index.html"
     },
     {
-      "source": "/cancel", 
-      "destination": "/cancel/"
+      "src": "/cancel",
+      "dest": "/cancel/index.html"
     }
   ]
 }
