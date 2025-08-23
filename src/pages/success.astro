@@ -1,0 +1,191 @@
+---
+// BRISCO STREETWEAR - ORDER SUCCESS PAGE
+import '../styles/global.css';
+
+const siteTitle = 'Order Confirmed - BRISC Streetwear';
+const siteDescription = 'Your BRISC order has been confirmed. Thank you for being your own light.';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{siteTitle}</title>
+  <meta name="description" content={siteDescription}>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://www.brisclothing.com/success">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/favico/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favico/favicon-32x32.png">
+</head>
+
+<body class="success-page">
+  <div class="success-container">
+    <div class="success-content">
+      <img src="/images/Product%20Assets/M%20copy.png" alt="BRISC" class="success-logo" />
+      
+      <div class="success-icon">✓</div>
+      
+      <h1 class="success-title">Order Confirmed!</h1>
+      
+      <p class="success-message">
+        Thank you for your order. You'll receive a confirmation email shortly with your order details and tracking information.
+      </p>
+      
+      <div class="success-details">
+        <p><strong>What's next?</strong></p>
+        <ul>
+          <li>Check your email for order confirmation</li>
+          <li>Your order will be processed within 1-2 business days</li>
+          <li>You'll receive tracking information once shipped</li>
+        </ul>
+      </div>
+      
+      <div class="success-actions">
+        <a href="/" class="btn btn-primary">Continue Shopping</a>
+        <a href="https://www.instagram.com/fatlil.2/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+          Follow Us
+        </a>
+      </div>
+      
+      <p class="success-footer">
+        Questions? Contact us at <a href="mailto:support@brisclothing.com">support@brisclothing.com</a>
+      </p>
+    </div>
+  </div>
+
+  <style>
+    .success-page {
+      background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Arial', sans-serif;
+      color: white;
+    }
+
+    .success-container {
+      max-width: 500px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .success-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      color: #00ff88;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    .success-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    .success-message {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .success-details {
+      background: rgba(255,255,255,0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .success-details ul {
+      margin: 1rem 0 0 0;
+      padding-left: 1.5rem;
+    }
+
+    .success-details li {
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: white;
+      color: black;
+    }
+
+    .btn-primary:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+
+    .btn-secondary:hover {
+      background: white;
+      color: black;
+    }
+
+    .success-footer {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    .success-footer a {
+      color: #00ff88;
+      text-decoration: none;
+    }
+
+    .success-footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .success-container {
+        padding: 1rem;
+      }
+      
+      .success-title {
+        font-size: 2rem;
+      }
+      
+      .success-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</body>
+</html>

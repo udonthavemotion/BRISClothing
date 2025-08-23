@@ -1,0 +1,183 @@
+---
+// BRISCO STREETWEAR - ORDER CANCELLED PAGE
+import '../styles/global.css';
+
+const siteTitle = 'Order Cancelled - BRISC Streetwear';
+const siteDescription = 'Your order was cancelled. No charges were made.';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{siteTitle}</title>
+  <meta name="description" content={siteDescription}>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://www.brisclothing.com/cancel">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/favico/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favico/favicon-32x32.png">
+</head>
+
+<body class="cancel-page">
+  <div class="cancel-container">
+    <div class="cancel-content">
+      <img src="/images/Product%20Assets/M%20copy.png" alt="BRISC" class="cancel-logo" />
+      
+      <div class="cancel-icon">✕</div>
+      
+      <h1 class="cancel-title">Order Cancelled</h1>
+      
+      <p class="cancel-message">
+        Your order was cancelled and no charges were made to your payment method.
+      </p>
+      
+      <div class="cancel-details">
+        <p><strong>What happened?</strong></p>
+        <ul>
+          <li>You chose to cancel the checkout process</li>
+          <li>No payment was processed</li>
+          <li>Your cart items are still available</li>
+        </ul>
+      </div>
+      
+      <div class="cancel-actions">
+        <a href="/" class="btn btn-primary">Return to Store</a>
+        <a href="mailto:support@brisclothing.com" class="btn btn-secondary">
+          Need Help?
+        </a>
+      </div>
+      
+      <p class="cancel-footer">
+        Changed your mind? Your items are waiting for you.
+      </p>
+    </div>
+  </div>
+
+  <style>
+    .cancel-page {
+      background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Arial', sans-serif;
+      color: white;
+    }
+
+    .cancel-container {
+      max-width: 500px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .cancel-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cancel-icon {
+      font-size: 4rem;
+      color: #ff6b6b;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    .cancel-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    .cancel-message {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .cancel-details {
+      background: rgba(255,255,255,0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .cancel-details ul {
+      margin: 1rem 0 0 0;
+      padding-left: 1.5rem;
+    }
+
+    .cancel-details li {
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .cancel-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: white;
+      color: black;
+    }
+
+    .btn-primary:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+
+    .btn-secondary:hover {
+      background: white;
+      color: black;
+    }
+
+    .cancel-footer {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .cancel-container {
+        padding: 1rem;
+      }
+      
+      .cancel-title {
+        font-size: 2rem;
+      }
+      
+      .cancel-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</body>
+</html>

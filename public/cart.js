@@ -239,6 +239,14 @@ class BriscoCart {
       });
     }
 
+    // Checkout button
+    const checkoutBtn = document.getElementById('cart-checkout');
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener('click', () => {
+        this.checkout();
+      });
+    }
+
     // Note: Add to cart is handled via direct onclick calls
 
     // Keyboard accessibility
@@ -403,6 +411,77 @@ class BriscoCart {
     // Reset cart
     this.items = [];
     console.log('=== Test Complete ===');
+  }
+
+  async checkout() {
+    if (this.items.length === 0) {
+      this.showToast('Your cart is empty');
+      return;
+    }
+
+    console.log('[BRISCO CHECKOUT] Processing checkout for items:', this.items);
+    
+    try {
+      // Get customer email from auth gate or prompt
+      const customerEmail = this.getCustomerEmail();
+      if (!customerEmail) {
+        this.showToast('Please provide your email address');
+        return;
+      }
+
+      // Prepare checkout data
+      const checkoutData = {
+        items: this.items.map(item => ({
+          productId: item.id === 1 ? 'brisco-white-tee' : 'brisco-black-tee',
+          quantity: item.quantity,
+          size: item.size,
+          name: item.name,
+          price: item.price
+        })),
+        customerEmail: customerEmail,
+        shippingOption: 'standard' // Default to standard shipping
+      };
+
+      console.log('[BRISCO CHECKOUT] Sending to Stripe:', checkoutData);
+
+      // Call Stripe checkout API
+      const response = await fetch('/api/stripe-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(checkoutData)
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.url) {
+        // Redirect to Stripe Checkout
+        console.log('[BRISCO CHECKOUT] Redirecting to Stripe:', result.url);
+        window.location.href = result.url;
+      } else if (result.message && result.message.includes('placeholder')) {
+        // Stripe not configured yet - show placeholder message
+        this.showToast('Checkout coming soon! Stripe integration in progress.');
+        console.log('[BRISCO CHECKOUT] Placeholder mode:', result);
+      } else {
+        throw new Error(result.error || 'Checkout failed');
+      }
+
+    } catch (error) {
+      console.error('[BRISCO CHECKOUT] Error:', error);
+      this.showToast('Checkout temporarily unavailable. Please try again later.');
+    }
+  }
+
+  getCustomerEmail() {
+    // Try to get email from the auth gate
+    const emailInput = document.getElementById('auth-email');
+    if (emailInput && emailInput.value) {
+      return emailInput.value;
+    }
+
+    // If not available, prompt user
+    return prompt('Please enter your email address for checkout:');
   }
 }
 

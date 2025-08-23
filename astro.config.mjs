@@ -11,7 +11,7 @@ export default defineConfig({
     // Use the latest supported Node.js runtime
     runtime: 'nodejs20.x'
   }),
-  site: 'https://brisco.vercel.app', // Vercel production domain
+  site: 'https://www.brisclothing.com', // Production domain
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto',

@@ -1,24 +1,20 @@
 BRISCO STREETWEAR - STRIPE INTEGRATION & SETUP CHECKLIST
 ========================================================
 
-📋 CLIENT MEETING CHECKLIST - STRIPE CONFIGURATION
---------------------------------------------------
+📋 STRIPE CONFIGURATION FOR BRISCO CLOTHING
+------------------------------------------
 
-🔑 STRIPE API KEYS (Required from Client)
+🔑 STRIPE API KEYS (Required)
 □ Test Publishable Key (pk_test_...)
 □ Live Publishable Key (pk_live_...)
 □ Test Secret Key (sk_test_...) - Store securely in environment
 □ Live Secret Key (sk_live_...) - Store securely in environment
 
 💰 PRODUCT PRICE IDs (Create in Stripe Dashboard)
-□ WASH16 - 16oz Wash & Wax Service
-□ CERAMIC16 - 16oz Ceramic Coating Service  
-□ WASH32 - 32oz Wash & Wax Service
-□ CERAMIC32 - 32oz Ceramic Coating Service
-□ BUGOFF_SINGLE - Bug Off Single Product
-□ BUGOFF_BUNDLE2 - Bug Off Bundle (2-pack)
-□ QUICKSHINE_SINGLE - Quick Shine Single Product
-□ QUICKSHINE_BUNDLE2 - Quick Shine Bundle (2-pack)
+□ BRISCO_WHITE_TEE - Be Your Own Light (White) - $65
+□ BRISCO_BLACK_TEE - Be Your Own Light (Black) - $65
+□ FUTURE_PRODUCT_1 - [Placeholder for next drop]
+□ FUTURE_PRODUCT_2 - [Placeholder for next drop]
 
 🚚 SHIPPING PRICE IDs (Create in Stripe Dashboard)
 □ Standard Shipping - $5.00
@@ -33,9 +29,9 @@ BRISCO STREETWEAR - STRIPE INTEGRATION & SETUP CHECKLIST
 □ Company Logo Upload (for Stripe Checkout page)
 
 🔗 WEBHOOK ENDPOINTS (Configure in Stripe Dashboard)
-□ Success URL: https://southsidedetailtint.com/success
-□ Cancel URL: https://southsidedetailtint.com/cancel
-□ Webhook Endpoint: https://southsidedetailtint.com/api/stripe/webhook
+□ Success URL: https://www.brisclothing.com/success
+□ Cancel URL: https://www.brisclothing.com/cancel
+□ Webhook Endpoint: https://www.brisclothing.com/api/stripe/webhook
 
 📧 GOHIGHLEVEL INTEGRATION STEPS
 □ GHL API Key (for webhook integration)
@@ -48,7 +44,7 @@ BRISCO STREETWEAR - STRIPE INTEGRATION & SETUP CHECKLIST
   - Payment Status: {{inboundWebhookRequest.paymentStatus}}
 
 🌐 DOMAIN CONFIGURATION
-□ Confirm production domain: southsidedetailtint.com (no hyphens)
+□ Confirm production domain: www.brisclothing.com
 □ Update canonical URLs in all pages
 □ Update success/cancel redirect URLs
 □ Update webhook endpoints
