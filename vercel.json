@@ -8,5 +8,15 @@
     "env": {
       "NODE_VERSION": "20"
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/success",
+      "destination": "/success/"
+    },
+    {
+      "source": "/cancel", 
+      "destination": "/cancel/"
+    }
+  ]
 }
