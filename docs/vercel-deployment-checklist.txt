@@ -42,7 +42,7 @@ BRISCO STREETWEAR - VERCEL DEPLOYMENT CHECKLIST
 
 🔧 ENVIRONMENT VARIABLES TO SET IN VERCEL:
 Required for Email:
-- GHL_WEBHOOK_URL=https://hooks.gohighlevel.com/your-webhook-url
+- GHL_WEBHOOK_URL=https://services.leadconnectorhq.com/hooks/9Ax53jRuv9z4JsRTJ60V/webhook-trigger/901f9ecd-0af6-4b78-8353-8678f0510286
 
 Optional for Enhanced Email:
 - GHL_API_KEY=your-ghl-api-key

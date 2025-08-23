@@ -35,7 +35,7 @@ BRISCO STREETWEAR - STRIPE INTEGRATION & SETUP CHECKLIST
 
 📧 GOHIGHLEVEL INTEGRATION STEPS
 □ GHL API Key (for webhook integration)
-□ GHL Webhook URL (for order notifications)
+✅ GHL Webhook URL: https://services.leadconnectorhq.com/hooks/9Ax53jRuv9z4JsRTJ60V/webhook-trigger/901f9ecd-0af6-4b78-8353-8678f0510286
 □ Custom Field Mappings:
   - Order ID: {{inboundWebhookRequest.orderId}}
   - Customer Email: {{inboundWebhookRequest.customerEmail}}
