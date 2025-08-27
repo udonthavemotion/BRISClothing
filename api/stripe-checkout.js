@@ -109,8 +109,8 @@ export default async function handler(req, res) {
 
     // Add shipping (simplified - no need for Stripe shipping rate IDs)
     const shippingRates = {
-      'standard': 500,  // $5.00
-      'express': 1200,  // $12.00
+      'standard': 0,    // 🧪 TEMP: $0.00 for testing (was $5.00)
+      'express': 0,     // 🧪 TEMP: $0.00 for testing (was $12.00)
       'free': 0         // $0.00
     };
 
