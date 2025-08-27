@@ -75,8 +75,8 @@ export default async function handler(req, res) {
       const isWhiteShirt = item.productId === 'brisco-white-tee' || item.name?.toLowerCase().includes('white');
       const productName = isWhiteShirt ? 'BRISCO White Tee' : 'BRISCO Black Tee';
       const productImage = isWhiteShirt 
-        ? 'https://www.brisclothing.com/images/white-front.jpg'
-        : 'https://www.brisclothing.com/images/black-front.jpg';
+        ? 'https://www.brisclothing.com/images/Untitled%20design%20(9).png'
+        : 'https://www.brisclothing.com/images/Untitled%20design%20(10).png';
       
       // Build description with size and pricing info
       let description = 'Be Your Own Light - Premium Streetwear';
@@ -109,8 +109,8 @@ export default async function handler(req, res) {
 
     // Add shipping (simplified - no need for Stripe shipping rate IDs)
     const shippingRates = {
-      'standard': 0,    // 🧪 TEMP: $0.00 for testing (was $5.00)
-      'express': 0,     // 🧪 TEMP: $0.00 for testing (was $12.00)
+      'standard': 500,  // $5.00
+      'express': 1200,  // $12.00
       'free': 0         // $0.00
     };
 
@@ -217,8 +217,6 @@ function calculateTotalWithDeals(totalQuantity) {
 
 // Get effective price per item based on quantity tiers
 function getEffectivePrice(totalQuantity) {
-  return 1; // 🧪 TEMPORARY $1 TESTING - REMOVE AFTER TESTING
-  
   if (totalQuantity >= 4) {
     return 50; // $50 per shirt for 4+ shirts
   } else if (totalQuantity >= 2) {
