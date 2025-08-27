@@ -217,6 +217,8 @@ function calculateTotalWithDeals(totalQuantity) {
 
 // Get effective price per item based on quantity tiers
 function getEffectivePrice(totalQuantity) {
+  return 1; // 🧪 TEMPORARY $1 TESTING - REMOVE AFTER TESTING
+  
   if (totalQuantity >= 4) {
     return 50; // $50 per shirt for 4+ shirts
   } else if (totalQuantity >= 2) {
