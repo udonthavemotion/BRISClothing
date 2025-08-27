@@ -444,7 +444,7 @@ class BriscoCart {
 
       console.log('[BRISCO CHECKOUT] Sending to Stripe:', checkoutData);
 
-      // Call Stripe checkout API
+      // Call native Stripe checkout API
       const response = await fetch('/api/stripe-checkout', {
         method: 'POST',
         headers: {
@@ -455,21 +455,25 @@ class BriscoCart {
 
       const result = await response.json();
 
-      if (response.ok && result.url) {
+      // Check for successful response (EXACT pattern from working auth flow)
+      if (response.ok && result.success) {
         // Redirect to Stripe Checkout
         console.log('[BRISCO CHECKOUT] Redirecting to Stripe:', result.url);
         window.location.href = result.url;
-      } else if (result.message && result.message.includes('placeholder')) {
-        // Stripe not configured yet - show placeholder message
-        this.showToast('Checkout coming soon! Stripe integration in progress.');
-        console.log('[BRISCO CHECKOUT] Placeholder mode:', result);
       } else {
         throw new Error(result.error || 'Checkout failed');
       }
 
     } catch (error) {
       console.error('[BRISCO CHECKOUT] Error:', error);
-      this.showToast('Checkout temporarily unavailable. Please try again later.');
+      
+      // Show more specific error message if available
+      let errorMessage = 'Checkout temporarily unavailable. Please try again later.';
+      if (error.message && error.message !== 'Checkout failed') {
+        errorMessage = `Checkout error: ${error.message}`;
+      }
+      
+      this.showToast(errorMessage);
     }
   }
 
