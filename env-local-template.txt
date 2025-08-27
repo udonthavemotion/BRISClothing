@@ -1,0 +1,23 @@
+# BRISCO CLOTHING - LOCAL DEVELOPMENT ENVIRONMENT VARIABLES
+# Copy these lines to a file named .env.local in your project root
+
+# =============================================================================
+# STRIPE CONFIGURATION (TEST MODE)
+# =============================================================================
+# Get these from your Stripe Dashboard -> Developers -> API Keys (Test Mode)
+STRIPE_SECRET_KEY=sk_test_51...your_test_secret_key_here
+STRIPE_PUBLISHABLE_KEY=pk_test_51...your_test_publishable_key_here
+
+# Webhook secret from Stripe Dashboard -> Developers -> Webhooks
+# Create webhook endpoint: http://localhost:4321/api/stripe-webhook
+STRIPE_WEBHOOK_SECRET=whsec_...your_webhook_secret_here
+
+# =============================================================================
+# GOHIGHLEVEL INTEGRATION (already configured)
+# =============================================================================
+GHL_WEBHOOK_URL=https://services.leadconnectorhq.com/hooks/9Ax53jRuv9z4JsRTJ60V/webhook-trigger/901f9ecd-0af6-4b78-8353-8678f0510286
+
+# =============================================================================
+# DEVELOPMENT SETTINGS
+# =============================================================================
+NODE_ENV=development

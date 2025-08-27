@@ -17,7 +17,7 @@ A production-ready Astro website for the Brisco streetwear brand, combining goth
   - Preloaded critical resources
   - Compressed assets
 - **SEO Ready**: Complete meta tags, Open Graph, Twitter Cards, Schema.org markup
-- **E-commerce Ready**: Cart functionality with GHL Stripe integration placeholders
+- **E-commerce Ready**: Full Stripe integration with order backup system and GHL webhooks
 
 ## 🚀 Quick Start
 
@@ -81,24 +81,28 @@ Configuration files:
 
 ## 🛒 E-commerce Integration
 
-### Current Implementation
-- **Local Cart**: localStorage-based shopping cart
-- **Product Management**: Hardcoded JSON in frontmatter
-- **UI Components**: Add to cart buttons, cart icon with count
+### Production Implementation ✅
+- **Stripe Payments**: Full live Stripe integration with tiered pricing
+- **Order Backup**: Local order storage system for reliability
+- **Admin Panel**: Order management interface at `/admin/orders`
+- **GHL Integration**: Webhook integration for customer management
+- **Pricing Tiers**: 
+  - 1 shirt: $65
+  - 2-3 shirts: $55 each
+  - 4+ shirts: $50 each
 
-### GoHighLevel Integration (Planned)
-The codebase includes placeholder comments for GHL integration:
+### API Endpoints
+- **`/api/stripe-checkout`**: Main checkout handler
+- **`/api/stripe-webhook`**: Payment confirmation webhook
+- **`/api/ghl-webhook`**: GoHighLevel integration
+- **`/api/orders-viewer`**: Admin order viewing
 
-```javascript
-// GHL Stripe Integration: Connect to GoHighLevel sub-account for payments
-// Add products via GHL funnels, use GHL API for checkout session creation
+### Environment Variables Required
 ```
-
-**Integration Points:**
-1. **Payments**: Replace cart checkout with GHL Stripe API
-2. **Email Marketing**: Connect email signup to GHL campaigns
-3. **Customer Management**: Sync orders with GHL CRM
-4. **Analytics**: Track events through GHL dashboard
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+GHL_WEBHOOK_URL=https://...
+```
 
 ## 📧 Email Marketing
 

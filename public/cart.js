@@ -187,7 +187,7 @@ class BriscoCart {
       return;
     }
     
-    // Populate cart items
+    // Populate cart items with better layout
     const effectivePrice = this.getEffectivePrice();
     
     this.items.forEach(item => {
@@ -208,6 +208,9 @@ class BriscoCart {
       `;
       cartItems.appendChild(cartItem);
     });
+    
+    // Add email input section before checkout
+    this.updateEmailSection();
   }
 
   bindEvents() {
@@ -421,20 +424,35 @@ class BriscoCart {
 
     console.log('[BRISCO CHECKOUT] Processing checkout for items:', this.items);
     
+    // Show loading state
+    const checkoutBtn = document.getElementById('cart-checkout');
+    const originalText = checkoutBtn ? checkoutBtn.textContent : '';
+    if (checkoutBtn) {
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = 'Processing...';
+    }
+    
     try {
-      // Get customer email from auth gate or prompt
+      // Get customer email with better validation
       const customerEmail = this.getCustomerEmail();
       if (!customerEmail) {
-        this.showToast('Please provide your email address');
+        this.showToast('Please enter a valid email address to continue');
+        // Focus on email input if it exists
+        const emailInput = document.getElementById('cart-email-input');
+        if (emailInput) {
+          emailInput.focus();
+          emailInput.classList.add('error-highlight');
+          setTimeout(() => emailInput.classList.remove('error-highlight'), 3000);
+        }
         return;
       }
 
-      // Prepare checkout data
+      // Prepare checkout data with better product identification
       const checkoutData = {
         items: this.items.map(item => ({
           productId: item.id === 1 ? 'brisco-white-tee' : 'brisco-black-tee',
           quantity: item.quantity,
-          size: item.size,
+          size: item.size || 'Not specified',
           name: item.name,
           price: item.price
         })),
@@ -444,48 +462,184 @@ class BriscoCart {
 
       console.log('[BRISCO CHECKOUT] Sending to Stripe:', checkoutData);
 
-      // Call native Stripe checkout API
+      // Call native Stripe checkout API with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
       const response = await fetch('/api/stripe-checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(checkoutData)
+        body: JSON.stringify(checkoutData),
+        signal: controller.signal
       });
 
-      const result = await response.json();
+      clearTimeout(timeoutId);
+      
+      // Parse response
+      let result;
+      try {
+        result = await response.json();
+      } catch (parseError) {
+        console.error('[BRISCO CHECKOUT] Failed to parse response:', parseError);
+        throw new Error('Invalid response from server');
+      }
+
+      console.log('[BRISCO CHECKOUT] Response:', { status: response.status, result });
 
       // Check for successful response (EXACT pattern from working auth flow)
       if (response.ok && result.success) {
         // Redirect to Stripe Checkout
         console.log('[BRISCO CHECKOUT] Redirecting to Stripe:', result.url);
+        
+        // Store checkout info for success page
+        sessionStorage.setItem('brisco_checkout_info', JSON.stringify({
+          sessionId: result.sessionId,
+          customerEmail: customerEmail,
+          totalItems: this.getItemCount(),
+          totalPrice: this.getTotal()
+        }));
+        
         window.location.href = result.url;
       } else {
-        throw new Error(result.error || 'Checkout failed');
+        // Handle different error scenarios
+        let errorMessage = 'Checkout failed';
+        
+        if (result.error) {
+          errorMessage = result.error;
+        } else if (!response.ok) {
+          errorMessage = `Server error (${response.status})`;
+        }
+        
+        // Log detailed error info for debugging
+        if (result.details) {
+          console.error('[BRISCO CHECKOUT] Error details:', result.details);
+        }
+        
+        throw new Error(errorMessage);
       }
 
     } catch (error) {
       console.error('[BRISCO CHECKOUT] Error:', error);
       
-      // Show more specific error message if available
+      // Show more specific error message based on error type
       let errorMessage = 'Checkout temporarily unavailable. Please try again later.';
-      if (error.message && error.message !== 'Checkout failed') {
-        errorMessage = `Checkout error: ${error.message}`;
+      
+      if (error.name === 'AbortError') {
+        errorMessage = 'Checkout timed out. Please check your connection and try again.';
+      } else if (error.message.includes('Stripe not configured')) {
+        errorMessage = 'Payment system is being configured. Please try again in a few minutes.';
+      } else if (error.message.includes('Missing email')) {
+        errorMessage = 'Please enter a valid email address.';
+      } else if (error.message.includes('Missing items')) {
+        errorMessage = 'Your cart appears to be empty. Please refresh and try again.';
+      } else if (error.message && error.message !== 'Checkout failed') {
+        errorMessage = error.message;
       }
       
       this.showToast(errorMessage);
+      
+    } finally {
+      // Reset checkout button
+      if (checkoutBtn) {
+        checkoutBtn.disabled = false;
+        checkoutBtn.textContent = originalText || 'Checkout';
+      }
+    }
+  }
+
+  updateEmailSection() {
+    // Find or create email section in cart footer
+    let emailSection = document.getElementById('cart-email-section');
+    const cartFooter = document.querySelector('.cart-footer');
+    const checkoutBtn = document.getElementById('cart-checkout');
+    
+    if (!emailSection && cartFooter) {
+      emailSection = document.createElement('div');
+      emailSection.id = 'cart-email-section';
+      emailSection.className = 'cart-email-section';
+      
+      // Insert before checkout button
+      if (checkoutBtn) {
+        cartFooter.insertBefore(emailSection, checkoutBtn);
+      } else {
+        cartFooter.appendChild(emailSection);
+      }
+    }
+    
+    if (emailSection && this.items.length > 0) {
+      emailSection.style.display = 'block';
+      emailSection.innerHTML = `
+        <div class="email-input-wrapper">
+          <label for="cart-email-input" class="email-label">Email for checkout:</label>
+          <input 
+            type="email" 
+            id="cart-email-input" 
+            class="cart-email-input" 
+            placeholder="your@email.com"
+            required
+            autocomplete="email"
+          />
+          <div class="email-validation-message" id="email-validation"></div>
+        </div>
+      `;
+      
+      // Add real-time email validation
+      const emailInput = document.getElementById('cart-email-input');
+      if (emailInput) {
+        emailInput.addEventListener('input', this.validateEmail.bind(this));
+        emailInput.addEventListener('blur', this.validateEmail.bind(this));
+      }
+    } else if (emailSection) {
+      emailSection.style.display = 'none';
+    }
+  }
+  
+  validateEmail() {
+    const emailInput = document.getElementById('cart-email-input');
+    const validationMsg = document.getElementById('email-validation');
+    const checkoutBtn = document.getElementById('cart-checkout');
+    
+    if (!emailInput || !validationMsg) return;
+    
+    const email = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (email === '') {
+      validationMsg.textContent = '';
+      validationMsg.className = 'email-validation-message';
+      if (checkoutBtn) checkoutBtn.disabled = true;
+    } else if (emailRegex.test(email)) {
+      validationMsg.textContent = '✓ Valid email';
+      validationMsg.className = 'email-validation-message valid';
+      if (checkoutBtn) checkoutBtn.disabled = false;
+    } else {
+      validationMsg.textContent = '✗ Please enter a valid email';
+      validationMsg.className = 'email-validation-message invalid';
+      if (checkoutBtn) checkoutBtn.disabled = true;
     }
   }
 
   getCustomerEmail() {
+    // Try to get email from cart input first
+    const cartEmailInput = document.getElementById('cart-email-input');
+    if (cartEmailInput && cartEmailInput.value.trim()) {
+      const email = cartEmailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailRegex.test(email)) {
+        return email;
+      }
+    }
+    
     // Try to get email from the auth gate
     const emailInput = document.getElementById('auth-email');
     if (emailInput && emailInput.value) {
       return emailInput.value;
     }
 
-    // If not available, prompt user
-    return prompt('Please enter your email address for checkout:');
+    // If not available, show error instead of prompt
+    return null;
   }
 }
 

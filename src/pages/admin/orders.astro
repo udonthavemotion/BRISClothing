@@ -1,0 +1,476 @@
+---
+// BRISCO Admin Orders Page - View Local Order Backups
+// Simple interface for Khalil to view all orders
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRISCO Orders - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid #ff6b35;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #ff6b35;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .btn.secondary {
+            background: #333;
+            color: #fff;
+        }
+
+        .btn.secondary:hover {
+            background: #444;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background: #2d2d2d;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        .stat-card h3 {
+            color: #ff6b35;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .orders-container {
+            background: #2d2d2d;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+
+        .order-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .order-card:hover {
+            border-color: #ff6b35;
+            transform: translateY(-2px);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .order-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ff6b35;
+        }
+
+        .order-date {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .order-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .detail-section {
+            background: #333;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .detail-section h4 {
+            color: #ff6b35;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .detail-section p {
+            color: #fff;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #ccc;
+        }
+
+        .error {
+            background: #d32f2f;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #ccc;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #ff9800;
+            color: #000;
+        }
+
+        .status-ready_to_ship {
+            background: #4caf50;
+            color: #fff;
+        }
+
+        .status-shipped {
+            background: #2196f3;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .order-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 BRISCO Orders</h1>
+            <p>Local Order Backup System - Never Lose an Order</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="loadOrders('today')">Today's Orders</button>
+            <button class="btn secondary" onclick="loadOrders('all')">All Orders</button>
+            <button class="btn secondary" onclick="loadStats()">Statistics</button>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by email, order number, or customer name..." onkeypress="handleSearchKeypress(event)">
+            </div>
+            <button class="btn" onclick="searchOrders()">Search</button>
+        </div>
+
+        <div id="statsContainer" class="stats" style="display: none;"></div>
+        <div id="ordersContainer" class="orders-container"></div>
+    </div>
+
+    <script>
+        let currentOrders = [];
+
+        // Load orders on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadOrders('recent');
+        });
+
+        async function loadOrders(type = 'recent') {
+            showLoading();
+            
+            try {
+                let url = '/api/orders-viewer';
+                if (type !== 'recent') {
+                    url += `?action=${type}`;
+                }
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.success) {
+                    currentOrders = data.orders;
+                    displayOrders(data.orders, data.period || type);
+                } else {
+                    showError(data.error || 'Failed to load orders');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        }
+
+        async function loadStats() {
+            showLoading();
+            
+            try {
+                const response = await fetch('/api/orders-viewer?action=stats');
+                const data = await response.json();
+
+                if (data.success) {
+                    displayStats(data.stats);
+                } else {
+                    showError(data.error || 'Failed to load statistics');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        }
+
+        async function searchOrders() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (!searchTerm) {
+                alert('Please enter a search term');
+                return;
+            }
+
+            showLoading();
+            
+            try {
+                const response = await fetch(`/api/orders-viewer?action=search&search=${encodeURIComponent(searchTerm)}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    currentOrders = data.orders;
+                    displayOrders(data.orders, `Search: "${data.searchTerm}"`);
+                } else {
+                    showError(data.error || 'Search failed');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        }
+
+        function handleSearchKeypress(event) {
+            if (event.key === 'Enter') {
+                searchOrders();
+            }
+        }
+
+        function displayOrders(orders, title) {
+            const container = document.getElementById('ordersContainer');
+            document.getElementById('statsContainer').style.display = 'none';
+            
+            if (orders.length === 0) {
+                container.innerHTML = `
+                    <div class="empty">
+                        <h3>No orders found</h3>
+                        <p>No orders match your criteria for ${title}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const ordersHtml = orders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-number">#${order.orderNumber}</div>
+                        <div class="order-date">${order.date}</div>
+                    </div>
+                    <div class="order-details">
+                        <div class="detail-section">
+                            <h4>Customer</h4>
+                            <p><strong>Name:</strong> ${order.customer.name}</p>
+                            <p><strong>Email:</strong> ${order.customer.email}</p>
+                            <p><strong>Phone:</strong> ${order.customer.phone}</p>
+                        </div>
+                        <div class="detail-section">
+                            <h4>Items</h4>
+                            <p>${order.items}</p>
+                        </div>
+                        <div class="detail-section">
+                            <h4>Pricing</h4>
+                            <p><strong>Subtotal:</strong> ${order.pricing.subtotal}</p>
+                            <p><strong>Shipping:</strong> ${order.pricing.shipping}</p>
+                            <p><strong>Total:</strong> ${order.pricing.total}</p>
+                            <p><strong>Savings:</strong> ${order.pricing.savings}</p>
+                        </div>
+                        <div class="detail-section">
+                            <h4>Shipping</h4>
+                            <p><strong>Method:</strong> ${order.shipping.method}</p>
+                            <p><strong>Address:</strong> ${order.shipping.address}</p>
+                            <p><strong>Status:</strong> <span class="status-badge status-${order.status}">${order.status}</span></p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <h2 style="margin-bottom: 20px; color: #ff6b35;">${title} (${orders.length} orders)</h2>
+                ${ordersHtml}
+            `;
+        }
+
+        function displayStats(stats) {
+            const statsContainer = document.getElementById('statsContainer');
+            const ordersContainer = document.getElementById('ordersContainer');
+            
+            statsContainer.style.display = 'grid';
+            
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <h3>${stats.totalOrders}</h3>
+                    <p>Total Orders</p>
+                </div>
+                <div class="stat-card">
+                    <h3>$${stats.totalRevenue}</h3>
+                    <p>Total Revenue</p>
+                </div>
+                <div class="stat-card">
+                    <h3>$${stats.averageOrderValue}</h3>
+                    <p>Average Order</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${stats.popularItems[0]?.count || 0}</h3>
+                    <p>Top Item Sales</p>
+                </div>
+            `;
+
+            const popularItemsHtml = stats.popularItems.map(item => 
+                `<p><strong>${item.item}:</strong> ${item.count} sold</p>`
+            ).join('');
+
+            ordersContainer.innerHTML = `
+                <h2 style="margin-bottom: 20px; color: #ff6b35;">Business Statistics</h2>
+                <div style="background: #1a1a1a; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #ff6b35; margin-bottom: 15px;">Popular Items</h3>
+                    ${popularItemsHtml}
+                </div>
+                <div style="background: #1a1a1a; padding: 20px; border-radius: 8px;">
+                    <h3 style="color: #ff6b35; margin-bottom: 15px;">Order Status Breakdown</h3>
+                    ${Object.entries(stats.statusBreakdown).map(([status, count]) => 
+                        `<p><strong>${status}:</strong> ${count} orders</p>`
+                    ).join('')}
+                </div>
+            `;
+        }
+
+        function showLoading() {
+            document.getElementById('ordersContainer').innerHTML = `
+                <div class="loading">
+                    <h3>Loading orders...</h3>
+                    <p>Please wait while we fetch your order data</p>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            document.getElementById('ordersContainer').innerHTML = `
+                <div class="error">
+                    <h3>Error</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

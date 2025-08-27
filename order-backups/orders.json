@@ -1,0 +1,30 @@
+[
+  {
+    "sessionId": "test_1756316603072",
+    "customerEmail": "test@brisclothing.com",
+    "items": [
+      {
+        "productId": "brisco-white-tee",
+        "name": "Test Item",
+        "size": "L",
+        "quantity": 1
+      }
+    ],
+    "totalAmount": 65,
+    "timestamp": "2025-08-27T17:43:23.072Z"
+  },
+  {
+    "sessionId": "test_1756316643261",
+    "customerEmail": "test@brisclothing.com",
+    "items": [
+      {
+        "productId": "brisco-white-tee",
+        "name": "Test Item",
+        "size": "L",
+        "quantity": 1
+      }
+    ],
+    "totalAmount": 65,
+    "timestamp": "2025-08-27T17:44:03.261Z"
+  }
+]

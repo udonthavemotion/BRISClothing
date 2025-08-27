@@ -1217,6 +1217,76 @@ section.products h2 .animated-period {
   animation: fadeInUp 0.6s ease forwards;
 }
 
+/* Cart Email Section */
+.cart-email-section {
+  margin: 16px 0;
+  padding: 16px;
+  background: rgba(26, 26, 26, 0.5);
+  border: 1px solid var(--border-gray);
+  border-radius: 8px;
+}
+
+.email-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.email-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-gray);
+}
+
+.cart-email-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--primary-black);
+  border: 1px solid var(--border-gray);
+  border-radius: 6px;
+  color: var(--primary-white);
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.cart-email-input:focus {
+  outline: none;
+  border-color: var(--primary-white);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.cart-email-input.error-highlight {
+  border-color: #ff6b6b;
+  animation: shake 0.5s ease-in-out;
+}
+
+.email-validation-message {
+  font-size: 12px;
+  min-height: 16px;
+  transition: all 0.3s ease;
+}
+
+.email-validation-message.valid {
+  color: #51cf66;
+}
+
+.email-validation-message.invalid {
+  color: #ff6b6b;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Disable checkout button when email invalid */
+#cart-checkout:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--border-gray);
+}
+
 /* Toast Messages */
 .toast {
   position: fixed;

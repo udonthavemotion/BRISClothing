@@ -42,6 +42,46 @@ export default async function handler(req, res) {
         console.log(`Customer: ${session.customer_email}`);
         console.log(`Amount: $${session.amount_total / 100}`);
         
+        // 💾 UPDATE LOCAL BACKUP with complete payment info
+        try {
+          const { default: backupSystem } = await import('./order-backup.js');
+          
+          // Get full session details from Stripe
+          const fullSession = await stripe.checkout.sessions.retrieve(session.id, {
+            expand: ['line_items', 'customer_details']
+          });
+          
+          // Update backup with complete information
+          const completeBackupData = {
+            sessionId: session.id,
+            paymentConfirmed: true,
+            paymentTimestamp: new Date().toISOString(),
+            customerDetails: fullSession.customer_details,
+            shippingDetails: fullSession.shipping_details,
+            lineItems: fullSession.line_items?.data || [],
+            paymentStatus: fullSession.payment_status,
+            fulfillmentStatus: 'ready_to_ship',
+            stripeReceiptUrl: session.receipt_url
+          };
+          
+          // Find and update the existing backup record
+          const allOrders = await backupSystem.getAllOrders();
+          const existingOrderIndex = allOrders.findIndex(order => order.sessionId === session.id);
+          
+          if (existingOrderIndex !== -1) {
+            // Update existing record
+            allOrders[existingOrderIndex] = { ...allOrders[existingOrderIndex], ...completeBackupData };
+            console.log('[BRISCO BACKUP] Updated order with payment confirmation:', session.id);
+          } else {
+            // Create new backup if somehow missing
+            await backupSystem.saveOrder(completeBackupData);
+            console.log('[BRISCO BACKUP] Created backup for confirmed payment:', session.id);
+          }
+          
+        } catch (backupError) {
+          console.error('[BRISCO BACKUP] Failed to update payment confirmation (non-critical):', backupError);
+        }
+        
         // That's it! Stripe handles everything else:
         // - Email receipts to customer
         // - Payment processing
