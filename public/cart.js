@@ -7,8 +7,32 @@ class BriscoCart {
 
   init() {
     console.log('Initializing simple cart system');
+    this.loadCart(); // Load cart from localStorage
     this.bindEvents();
     this.updateCartUI();
+  }
+
+  // Load cart from localStorage
+  loadCart() {
+    try {
+      const savedCart = localStorage.getItem('brisco-cart');
+      if (savedCart) {
+        this.items = JSON.parse(savedCart);
+        console.log('Loaded cart from storage:', this.items);
+      }
+    } catch (error) {
+      console.error('Error loading cart:', error);
+      this.items = [];
+    }
+  }
+
+  // Save cart to localStorage
+  saveCart() {
+    try {
+      localStorage.setItem('brisco-cart', JSON.stringify(this.items));
+    } catch (error) {
+      console.error('Error saving cart:', error);
+    }
   }
 
   addItem(product) {
@@ -35,6 +59,7 @@ class BriscoCart {
       console.log('Added new item:', newItem);
     }
 
+    this.saveCart(); // Save to localStorage
     this.updateCartUI();
     this.showToast("Thank you, sincerely, Family.");
   }
@@ -45,6 +70,7 @@ class BriscoCart {
     if (itemIndex > -1) {
       const removedItem = this.items[itemIndex];
       this.items.splice(itemIndex, 1);
+      this.saveCart(); // Save to localStorage
       this.updateCartUI();
       this.showToast(`${removedItem.name}${removedItem.size ? ` (${removedItem.size})` : ''} removed from cart`);
     }
@@ -58,6 +84,7 @@ class BriscoCart {
         this.removeItem(itemKey);
       } else {
         item.quantity = newQuantity;
+        this.saveCart(); // Save to localStorage
         this.updateCartUI();
       }
     }
@@ -309,7 +336,22 @@ class BriscoCart {
     // Create new toast
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.textContent = message;
+    
+    // Create message span
+    const messageSpan = document.createElement('span');
+    messageSpan.textContent = message;
+    
+    // Create close button
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'toast-close';
+    closeBtn.innerHTML = '×';
+    closeBtn.onclick = () => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 400);
+    };
+    
+    toast.appendChild(messageSpan);
+    toast.appendChild(closeBtn);
     
     document.body.appendChild(toast);
     
