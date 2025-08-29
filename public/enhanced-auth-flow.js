@@ -10,10 +10,12 @@ class BRISCAuthFlow {
   }
 
   init() {
+    console.log('[BRISC Auth] Initializing authentication flow...');
     this.bindElements();
     this.setupEventListeners();
     this.checkExistingAccess();
     this.checkDirectAccess();
+    console.log('[BRISC Auth] Initialization complete. Current step:', this.currentStep);
   }
 
   bindElements() {
@@ -31,6 +33,20 @@ class BRISCAuthFlow {
     this.passwordBtn = document.getElementById('password-submit-btn');
     this.backBtn = document.getElementById('back-to-email-btn');
     this.emailDisplay = document.getElementById('email-display');
+    
+    // Debug: Log element binding status
+    console.log('[BRISC Auth] Element binding status:', {
+      authContainer: !!this.authContainer,
+      emailStep: !!this.emailStep,
+      passwordStep: !!this.passwordStep,
+      storeContent: !!this.storeContent,
+      emailInput: !!this.emailInput,
+      emailBtn: !!this.emailBtn,
+      passwordInput: !!this.passwordInput,
+      passwordBtn: !!this.passwordBtn,
+      backBtn: !!this.backBtn,
+      emailDisplay: !!this.emailDisplay
+    });
   }
 
   setupEventListeners() {
@@ -161,51 +177,66 @@ class BRISCAuthFlow {
   }
 
   showPasswordStep() {
+    console.log('[BRISC Auth] Transitioning to password step');
     this.currentStep = 'password';
+    
+    // Ensure email step is completely hidden
+    if (this.emailStep) {
+      this.emailStep.style.display = 'none';
+      console.log('[BRISC Auth] Email step hidden');
+    }
     
     // Update email display
     if (this.emailDisplay) {
       this.emailDisplay.textContent = this.userEmail;
+      console.log('[BRISC Auth] Email display updated:', this.userEmail);
     }
     
     // Show password step with torch-inspired animation
-    this.passwordStep.style.display = 'flex';
-    this.passwordStep.style.transform = 'translateX(100%) scale(0.95)';
-    this.passwordStep.style.opacity = '0';
-    this.passwordStep.style.filter = 'blur(2px)';
-    
-    setTimeout(() => {
-      this.passwordStep.style.transform = 'translateX(0) scale(1)';
-      this.passwordStep.style.opacity = '1';
-      this.passwordStep.style.filter = 'blur(0)';
-      this.passwordStep.style.transition = 'all 0.4s ease';
+    if (this.passwordStep) {
+      this.passwordStep.style.display = 'flex';
+      this.passwordStep.style.transform = 'translateX(100%) scale(0.95)';
+      this.passwordStep.style.opacity = '0';
+      this.passwordStep.style.filter = 'blur(2px)';
       
-      // Focus password input
-      if (this.passwordInput) {
-        setTimeout(() => this.passwordInput.focus(), 200);
-      }
-    }, 50);
+      setTimeout(() => {
+        this.passwordStep.style.transform = 'translateX(0) scale(1)';
+        this.passwordStep.style.opacity = '1';
+        this.passwordStep.style.filter = 'blur(0)';
+        this.passwordStep.style.transition = 'all 0.4s ease';
+        console.log('[BRISC Auth] Password step animation complete');
+        
+        // Focus password input
+        if (this.passwordInput) {
+          setTimeout(() => this.passwordInput.focus(), 200);
+        }
+      }, 50);
+    } else {
+      console.error('[BRISC Auth] Password step element not found!');
+    }
   }
 
   showEmailStep() {
     this.currentStep = 'email';
     
-    // Hide password step
+    // Ensure password step is completely hidden
     if (this.passwordStep) {
       this.passwordStep.style.display = 'none';
     }
     
     // Show email step with animation
-    this.emailStep.style.display = 'flex';
-    this.emailStep.style.transform = 'translateX(0) scale(1)';
-    this.emailStep.style.opacity = '1';
-    this.emailStep.style.filter = 'blur(0)';
-    this.emailStep.style.transition = 'all 0.4s ease';
-    
-    // Clear and focus email input
-    if (this.emailInput) {
-      this.emailInput.value = '';
-      setTimeout(() => this.emailInput.focus(), 200);
+    if (this.emailStep) {
+      this.emailStep.style.display = 'flex';
+      this.emailStep.style.transform = 'translateX(0) scale(1)';
+      this.emailStep.style.opacity = '1';
+      this.emailStep.style.filter = 'blur(0)';
+      this.emailStep.style.transition = 'all 0.4s ease';
+      
+      // Clear and focus email input
+      if (this.emailInput) {
+        this.emailInput.value = '';
+        setTimeout(() => this.emailInput.focus(), 200);
+      }
     }
   }
 
@@ -374,6 +405,14 @@ class BRISCAuthFlow {
       return;
     }
 
+    // Ensure email step is hidden first
+    if (this.emailStep) {
+      this.emailStep.style.display = 'none';
+    }
+    if (this.passwordStep) {
+      this.passwordStep.style.display = 'none';
+    }
+
     // Check for direct access parameter from email
     const urlParams = new URLSearchParams(window.location.search);
     const accessParam = urlParams.get('access');
@@ -390,13 +429,17 @@ class BRISCAuthFlow {
       this.userEmail = 'direct-access@email.com';
       
       // Show password step directly
-      this.showPasswordStep();
+      setTimeout(() => {
+        this.showPasswordStep();
+        // Show helpful message
+        this.showToast('Enter the access code from your email', 'info');
+      }, 100);
       
-      // Show helpful message
-      this.showToast('Enter the access code from your email', 'info');
     } else {
       // Normal flow - show email step
-      this.showEmailStep();
+      setTimeout(() => {
+        this.showEmailStep();
+      }, 100);
     }
   }
 }

@@ -36,10 +36,12 @@ const siteDescription = 'BRISC: Streetwear born in Thibodaux, Louisiana. Rooted 
   <title>BRISC Exclusive Access - Be Your Own Light | Thibodaux Streetwear</title>
   <meta name="description" content="BRISC: Streetwear born in Thibodaux, Louisiana. Rooted in discipline, pride, and Southern strength, built for the modern world. Be your own light.">
   
-  <!-- Cache Control Headers -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <!-- Cache Control Headers - Enhanced for Authentication Issues -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+  <meta name="cache-control" content="no-cache">
+  <meta name="last-modified" content={new Date().toISOString()}>
   
   <!-- SEO Meta Tags -->
   <meta name="keywords" content="streetwear, fashion, BRISC, Khalil Brisco, Thibodaux, Louisiana, urban wear, limited edition, torch, flame, be your own light, Southern streetwear">
@@ -294,9 +296,9 @@ const siteDescription = 'BRISC: Streetwear born in Thibodaux, Louisiana. Rooted 
     </footer>
   </div> <!-- End store-content -->
 
-  <!-- Scripts -->
-  <script is:inline src="/cart.js"></script>
-  <script is:inline src="/enhanced-auth-flow.js"></script>
+  <!-- Scripts with Cache Busting -->
+  <script is:inline src={`/cart.js?v=${Date.now()}`}></script>
+  <script is:inline src={`/enhanced-auth-flow.js?v=${Date.now()}`}></script>
   
   <!-- Service Worker Registration for PWA -->
   <script>

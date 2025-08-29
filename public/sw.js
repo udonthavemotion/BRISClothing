@@ -51,6 +51,12 @@ self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (request.method !== 'GET') return;
   
+  // Never cache authentication scripts - always fetch fresh
+  if (request.url.includes('enhanced-auth-flow.js') || request.url.includes('password.js')) {
+    event.respondWith(fetch(request));
+    return;
+  }
+  
   // Network-first strategy for HTML documents to avoid stale content
   if (request.destination === 'document') {
     event.respondWith(
